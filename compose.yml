@@ -2,6 +2,8 @@ version: '3.7'
 services:
     server1:
         image: nginx
+        environment:
+            - SERVICE_FQDN_SERVER1
         ports:
             - '3020'
         labels:
@@ -15,6 +17,8 @@ services:
 
     server2:
         image: nginx
+        environment:
+            - SERVICE_FQDN_SERVER2
         ports:
             - '4979:4979'
         labels:
