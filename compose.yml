@@ -7,8 +7,12 @@ services:
         ports:
             - '3020'
         labels:
-            caddy: '${SERVICE_FQDN_SERVER1}'
-            caddy.reverse_proxy: '{{upstreams 3020}}'
+            - caddy_0.encode=zstd gzip
+            - caddy_0.handle_path.0_reverse_proxy={{upstreams 3020}}
+            - caddy_0.handle_path=/*
+            - caddy_0=${SERVICE_FQDN_SERVER1}
+            - caddy_ingress_network=coolify
+
     server2:
         image: nginx
         environment:
@@ -16,9 +20,8 @@ services:
         ports:
             - '4979:4979'
         labels:
-            caddy: '${SERVICE_FQDN_SERVER2}'
-            caddy.reverse_proxy: '{{upstreams}}'
-
-networks:
-    caddy:
-        external: true
+            - caddy_1.encode=zstd gzip
+            - caddy_1.handle_path.0_reverse_proxy={{upstreams 3020}}
+            - caddy_1.handle_path=/*
+            - caddy_1=${SERVICE_FQDN_SERVER2}
+            - caddy_ingress_network=coolify
