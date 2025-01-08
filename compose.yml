@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+    server1:
+        image: nginx
+        environment:
+            - SERVICE_FQDN_SERVER1
+        ports:
+            - '3020'
+        labels:
+            caddy: '${SERVICE_FQDN_SERVER1}'
+            caddy.reverse_proxy: '{{upstreams 3020}}'
+    server2:
+        image: nginx
+        environment:
+            - SERVICE_FQDN_SERVER2
+        ports:
+            - '4979:4979'
+        labels:
+            caddy: '${SERVICE_FQDN_SERVER2}'
+            caddy.reverse_proxy: '{{upstreams}}'
+
+networks:
+    caddy:
+        external: true
