@@ -5,6 +5,7 @@ services:
         ports:
             - '3020'
         labels:
+            - caddy_0=${SERVICE_FQDN_SERVER1}
             - caddy_0.encode=zstd gzip
             - caddy_0.handle_path.0_reverse_proxy={{upstreams 3020}}
             - caddy_0.handle_path=/*
@@ -17,6 +18,7 @@ services:
         ports:
             - '4979:4979'
         labels:
+            - caddy_1=${SERVICE_FQDN_SERVER2}
             - caddy_1.encode=zstd gzip
             - caddy_1.handle_path=/*
             - caddy_1.header=-Server
