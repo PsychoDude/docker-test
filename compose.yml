@@ -21,7 +21,6 @@ services:
             - '4979:4979'
         labels:
             - caddy_1.encode=zstd gzip
-            - caddy_1.handle_path.0_reverse_proxy={{upstreams 3020}}
             - caddy_1.handle_path=/*
             - caddy_1=${SERVICE_FQDN_SERVER2}
             - caddy_ingress_network=coolify
