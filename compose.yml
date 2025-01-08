@@ -2,25 +2,23 @@ version: '3.7'
 services:
     server1:
         image: nginx
-        environment:
-            - SERVICE_FQDN_SERVER1
         ports:
             - '3020'
         labels:
             - caddy_0.encode=zstd gzip
             - caddy_0.handle_path.0_reverse_proxy={{upstreams 3020}}
             - caddy_0.handle_path=/*
+            - caddy_0.header=-Server
             - caddy_0=${SERVICE_FQDN_SERVER1}
             - caddy_ingress_network=coolify
 
     server2:
         image: nginx
-        environment:
-            - SERVICE_FQDN_SERVER2
         ports:
             - '4979:4979'
         labels:
             - caddy_1.encode=zstd gzip
             - caddy_1.handle_path=/*
+            - caddy_1.header=-Server
             - caddy_1=${SERVICE_FQDN_SERVER2}
             - caddy_ingress_network=coolify
